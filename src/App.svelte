@@ -1,5 +1,8 @@
 <script>
 	import NavBar from "./NavBar.svelte";
+	import ExplorePage from "./ExplorePage.svelte";
+	import DownloadPage from "./DownloadPage.svelte";
+	import SettingsPage from "./SettingsPage.svelte";
 
 	export let name;
 	let page = "explore";
@@ -7,12 +10,15 @@
 
 <main>
 	<div class="appcontainer">
-		<div style="padding: 15px;">
-			{#each Array(100) as i}
-				<p>Scroll me!</p>
-			{/each}
-			<h1>You are on {page}</h1>
-			<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+		<div class="appmargin">
+			{#if page === "explore"}
+				<ExplorePage/>
+			{:else if page === "downloads"}
+				<DownloadPage/>
+			{:else if page === "settings"}
+				<SettingsPage/>
+			{/if}
+
 		</div>
 	</div>
 	<NavBar bind:navpage={page} />
@@ -26,7 +32,13 @@
 		overflow: auto;
 	}
 
+	.appmargin {
+		padding: 15px;
+	}
+
 	:global(body){
 		padding: 0;
+		background-color: #070707;
+		color: white;
 	}
 </style>
