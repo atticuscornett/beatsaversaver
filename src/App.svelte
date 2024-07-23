@@ -9,8 +9,8 @@
 </script>
 
 <main>
-	<div class="appcontainer">
-		<div class="appmargin">
+	<div class="appContainer">
+		<div class="appMargin">
 			{#if page === "explore"}
 				<ExplorePage/>
 			{:else if page === "downloads"}
@@ -25,14 +25,14 @@
 </main>
 
 <style>
-	.appcontainer {
+	.appContainer {
 		height: 90vh;
 		margin: 0;
 		padding: 0;
 		overflow: auto;
 	}
 
-	.appmargin {
+	.appMargin {
 		padding: 15px;
 	}
 
