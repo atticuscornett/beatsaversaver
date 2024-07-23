@@ -25,7 +25,7 @@ function scanCustomLevels(){
 function downloadCustomLevel(id){
     console.log("Downloading level with id: " + id);
     if (id.includes("/")){
-        return;
+        return false;
     }
 
     console.log("Requesting level zip from BeatSaver API");
@@ -58,6 +58,8 @@ function downloadCustomLevel(id){
                 console.error("Error downloading level: " + e);
             }
         })
+
+    return true;
 }
 
 function installCustomLevel(levelFile, levelData){
@@ -65,7 +67,7 @@ function installCustomLevel(levelFile, levelData){
     let levelId = levelData.id;
     let levelAuthorName = levelData.metadata.levelAuthorName;
     let levelName = levelData.metadata.songName;
-    let levelFolder = path.join(customLevelFolder, levelId + " (" + levelAuthorName + " - " + levelName + ")");
+    let levelFolder = path.join(customLevelFolder, levelId + " (" + levelName + " - " + levelAuthorName + ")");
 
     console.log("Extracting " + levelFile + " to " + levelFolder);
 
