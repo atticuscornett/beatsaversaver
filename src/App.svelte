@@ -1,30 +1,32 @@
 <script>
+	import NavBar from "./NavBar.svelte";
+
 	export let name;
+	let page = "explore";
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<div class="appcontainer">
+		<div style="padding: 15px;">
+			{#each Array(100) as i}
+				<p>Scroll me!</p>
+			{/each}
+			<h1>You are on {page}</h1>
+			<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+		</div>
+	</div>
+	<NavBar bind:navpage={page} />
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
+	.appcontainer {
+		height: 90vh;
+		margin: 0;
+		padding: 0;
+		overflow: auto;
 	}
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
+	:global(body){
+		padding: 0;
 	}
 </style>
