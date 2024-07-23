@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require("path");
 const fs = require("fs");
+const AdmZip = require("adm-zip");
 const {get} = require("https");
 let customLevelFolder = "C:\\Program Files\\Oculus\\Software\\Software\\hyperbolic-magnetism-beat-saber\\Beat Saber_Data\\CustomLevels";
 
@@ -22,30 +23,57 @@ function scanCustomLevels(){
 }
 
 function downloadCustomLevel(id){
+    console.log("Downloading level with id: " + id);
     if (id.includes("/")){
         return;
     }
+
+    console.log("Requesting level zip from BeatSaver API");
     fetch("https://api.beatsaver.com/maps/id/" + id)
         .then(response => response.json())
         .then((data) => {
-            let fileUrl = data.versions[0].downloadURL;
-            const destination = 'beat-saber-' + id + '.zip';
+            try {
+                let fileUrl = data.versions[0].downloadURL;
+                const destination = 'beat-saber-' + id + '.zip';
 
-            const file = fs.createWriteStream(destination);
+                console.log("Downloading level from " + fileUrl + " as " + destination);
 
-            get(fileUrl, (response) => {
-                response.pipe(file);
-                file.on('finish', () => {
-                    file.close(() => {
-                        console.log('File downloaded successfully');
+                const file = fs.createWriteStream(destination);
+
+                get(fileUrl, (response) => {
+                    response.pipe(file);
+                    file.on('finish', () => {
+                        file.close(() => {
+                            console.log('File downloaded successfully');
+                            installCustomLevel(destination, data);
+                        });
+                    });
+                }).on('error', (err) => {
+                    fs.unlink(destination, () => {
+                        console.error('Error downloading file:', err);
                     });
                 });
-            }).on('error', (err) => {
-                fs.unlink(destination, () => {
-                    console.error('Error downloading file:', err);
-                });
-            });
+            }
+            catch (e) {
+                console.error("Error downloading level: " + e);
+            }
         })
+}
+
+function installCustomLevel(levelFile, levelData){
+    let zip = new AdmZip(levelFile);
+    let levelId = levelData.id;
+    let levelAuthorName = levelData.metadata.levelAuthorName;
+    let levelName = levelData.metadata.songName;
+    let levelFolder = path.join(customLevelFolder, levelId + " (" + levelAuthorName + " - " + levelName + ")");
+
+    console.log("Extracting " + levelFile + " to " + levelFolder);
+
+    zip.extractAllTo(levelFolder, true);
+
+    console.log("Level extracted to " + levelFolder);
+
+    fs.rmSync(levelFile);
 }
 
 ipcMain.handle("scanCustomLevels", (event, args) => {
@@ -55,8 +83,6 @@ ipcMain.handle("scanCustomLevels", (event, args) => {
 ipcMain.handle("downloadCustomLevel", (event, args) => {
     downloadCustomLevel(args);
 });
-
-console.log(JSON.stringify(scanCustomLevels()));
 
 
 const createWindow = () => {
