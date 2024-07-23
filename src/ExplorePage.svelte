@@ -16,7 +16,7 @@
 <h1>Explore</h1>
 <input>
 
-<div id="results">
+<div id="searchResults">
     {#each searchResults as song}
         <SongResult song={song} />
     {/each}
@@ -25,3 +25,12 @@
 <div id="output">
 
 </div>
+
+<style>
+    #searchResults {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+</style>

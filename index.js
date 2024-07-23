@@ -13,3 +13,5 @@ const createWindow = () => {
 app.whenReady().then(() => {
     createWindow()
 })
+
+//C:\Program Files\Oculus\Software\Software\hyperbolic-magnetism-beat-saber\Beat Saber_Data\CustomLevels
