@@ -74,7 +74,13 @@
 		width: 100%;
 	}
 
+	@font-face {
+		font-family: Lexend;
+		src: url("../../src/lexend.ttf");
+	}
+
 	:global(body){
+		font-family: Lexend, sans-serif;
 		padding: 0;
 		background-color: #070707;
 		color: white;
