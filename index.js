@@ -99,12 +99,37 @@ function installCustomLevel(levelFile, levelData){
     }
 }
 
+function removeCustomLevel(levelFolder, name){
+    levelFolder = path.basename(levelFolder);
+    if (levelFolder.includes("..") || levelFolder.includes("/") || levelFolder.includes("\\")){
+        notify("Invalid level folder. (folder: " + levelFolder + ", code: 7)");
+        return;
+    }
+
+    levelFolder = path.join(customLevelFolder, levelFolder);
+
+    try {
+        fs.rmSync(levelFolder, {recursive: true});
+        notify("Level removed: " + levelFolder);
+    }
+    catch (e) {
+        console.error("Error removing level: " + e);
+        notify("Error removing level. (folder: " + levelFolder + ", code: 6)");
+    }
+
+    return true;
+}
+
 ipcMain.handle("scanCustomLevels", (event, args) => {
     return scanCustomLevels();
 });
 
 ipcMain.handle("downloadCustomLevel", (event, args) => {
     downloadCustomLevel(args);
+});
+
+ipcMain.handle("removeCustomLevel", (event, args) => {
+    removeCustomLevel(args);
 });
 
 

@@ -14,7 +14,7 @@
 <div id="downloadList">
     {#if downloadedLevels}
         {#each downloadedLevels as level}
-            <ScannedSong song={level}/>
+            <ScannedSong song={level} bind:downloadedSongs={downloadedLevels}/>
         {/each}
     {:else}
         <h1>Scanning downloaded levels...</h1>

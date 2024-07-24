@@ -1,5 +1,11 @@
 <script>
     export let song;
+    export let downloadedSongs;
+
+    async function removeSong(){
+        await electronAPI.removeCustomLevel(song.folder, song._songName + " (" + song._songAuthorName + ")");
+        downloadedSongs = await electronAPI.scanCustomLevels();
+    }
 </script>
 
 <div class="songResult">
@@ -13,6 +19,7 @@
     </div>
     <div class="sideDetails">
         <h5>{Math.round(song._beatsPerMinute)} bpm</h5>
+        <a href="#" on:click={removeSong}><h5>Delete</h5></a>
     </div>
 </div>
 
