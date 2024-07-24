@@ -31,7 +31,7 @@
     let splitDescription = levelView.description.split("\n");
 </script>
 
-<button on:click={back}>&lt; Back</button>
+<button class="backButton" on:click={back}>&lt; Back to Explore</button>
 
 <div class="header">
     <div class="headerImages">
@@ -120,6 +120,22 @@
             </div>
         </div>
     </div>
+
+    <div class="levelInfo">
+        <h3>Obstacle Stats</h3>
+        <div class="levelInfoFlex">
+            {#each levelView.versions[0].diffs as diff}
+                <div class="levelInfoSpace">
+                    <h4>{diff.difficulty}</h4>
+                    <h5>Notes: {diff.notes}</h5>
+                    <h5>Notes per Second: {diff.nps}</h5>
+                    <h5>Note Jump Speed {diff.njs}</h5>
+                    <h5>Bombs: {diff.bombs}</h5>
+                    <h5>Walls: {diff.obstacles}</h5>
+                </div>
+            {/each}
+        </div>
+    </div>
 </div>
 
 <style>
@@ -180,9 +196,23 @@
 
     .levelInfoFlex {
         display: flex;
+        flex-wrap: wrap;
     }
 
     .levelInfoSpace {
         margin-right: 100px;
+    }
+
+    .backButton {
+        margin: 8px;
+        padding: 5px;
+        background: #222222;
+        border-radius: 8px;
+        cursor: pointer;
+        position: fixed;
+        top: 10px;
+        right: 30px;
+        color: white;
+        border: none;
     }
 </style>
