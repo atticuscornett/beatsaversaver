@@ -110,7 +110,7 @@ function removeCustomLevel(levelFolder, name){
 
     try {
         fs.rmSync(levelFolder, {recursive: true});
-        notify("Level removed: " + levelFolder);
+        notify("Level removed: " + path.basename(levelFolder));
     }
     catch (e) {
         console.error("Error removing level: " + e);

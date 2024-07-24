@@ -29,6 +29,7 @@
         min-width: 400px;
         text-align: center;
         margin-bottom: 10px;
+        max-width: 60vw;
     }
 
     h4 {
