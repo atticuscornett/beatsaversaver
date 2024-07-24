@@ -17,7 +17,7 @@
             <ScannedSong song={level} bind:downloadedSongs={downloadedLevels}/>
         {/each}
     {:else}
-        <h1>Scanning downloaded levels...</h1>
+        <h2>Scanning downloaded levels...</h2>
     {/if}
 </div>
 
@@ -27,5 +27,10 @@
         flex-wrap: wrap;
         justify-content: flex-start;
         align-items: flex-start;
+    }
+
+    h1 {
+        margin-top: 0;
+        margin-left: 8px;
     }
 </style>
