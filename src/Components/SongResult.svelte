@@ -2,6 +2,7 @@
     import AvailableModes from "./AvailableModes.svelte";
 
     export let song;
+    export let levelView;
 
     function songDuration(){
         let duration = song.metadata.duration;
@@ -17,6 +18,10 @@
         let downloadStarted = await electronAPI.downloadCustomLevel(song.id);
         notify("Download started: " + song.metadata.songName + " (" + song.id + ")");
     }
+
+    function moreInfo(){
+        levelView = song;
+    }
 </script>
 
 <div class="songResult">
@@ -25,7 +30,7 @@
         <h4>Score: {Math.floor(song.stats.score*100)}%</h4>
     </div>
     <div>
-        <h4>{song.name}</h4>
+        <a href="#" on:click={moreInfo}><h4>{song.name}</h4></a>
         <h5>{song.metadata.songAuthorName}</h5>
         <AvailableModes song={song} />
         <h5>{song.metadata.levelAuthorName}</h5>

@@ -1,6 +1,7 @@
 <script>
     import {onMount} from "svelte";
     import SongResult from "./Components/SongResult.svelte";
+    import LevelInfo from "./Components/LevelInfo.svelte";
 
     let searchResults = false;
 
@@ -25,19 +26,30 @@
 
 <h1>Explore</h1>
 
-<input id="searchQuery">
-<button on:click={search}>Search</button>
+{#if levelView === false}
+    <input id="searchQuery">
+    <button on:click={search}>Search</button>
 
-{#if searchResults === false}
-    <p>Loading...</p>
-{:else if searchResults.length === 0}
-    <p>No results found</p>
+    <details>
+        <summary>Advanced Search</summary>
+        <p>Coming soon...</p>
+    </details>
+{/if}
+
+{#if levelView === false}
+    {#if searchResults === false}
+        <p>Loading...</p>
+    {:else if searchResults.length === 0}
+        <p>No results found</p>
+    {:else}
+        <div id="searchResults">
+            {#each searchResults as song}
+                <SongResult song={song} bind:levelView={levelView} />
+            {/each}
+        </div>
+    {/if}
 {:else}
-    <div id="searchResults">
-        {#each searchResults as song}
-            <SongResult song={song} />
-        {/each}
-    </div>
+    <LevelInfo bind:levelView={levelView}></LevelInfo>
 {/if}
 
 <style>
@@ -46,5 +58,26 @@
         flex-wrap: wrap;
         justify-content: flex-start;
         align-items: flex-start;
+    }
+
+    button {
+        width: calc(25% - 24px);
+    }
+
+    #searchQuery {
+        width: 75%;
+        margin-left: 8px;
+    }
+
+    h1 {
+        margin-top: 0;
+        margin-left: 6px;
+    }
+
+    details {
+        margin: 8px;
+        padding: 8px;
+        border-radius: 8px;
+        background: #222222;
     }
 </style>
