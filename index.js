@@ -1,23 +1,51 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require("path");
 const fs = require("fs");
 const AdmZip = require("adm-zip");
 const {get} = require("https");
+const storage = require('node-persist');
+
 let customLevelFolder = "C:\\Program Files\\Oculus\\Software\\Software\\hyperbolic-magnetism-beat-saber\\Beat Saber_Data\\CustomLevels";
 let win;
 
-function scanCustomLevels(){
-    let folders = fs.readdirSync(customLevelFolder)
-        .map(file => path.join(customLevelFolder, file))
-        .filter(path => fs.statSync(path).isDirectory());
+async function getCustomLevelFolder(){
+    await storage.init();
+    let customLevelFolder = await storage.getItem('customLevelFolder');
+    if (customLevelFolder === undefined){
+        customLevelFolder = "C:\\Program Files\\Oculus\\Software\\Software\\hyperbolic-magnetism-beat-saber\\Beat Saber_Data\\CustomLevels";
+    }
+}
 
+function setCustomLevelFolder(folder){
+    storage.setItem('customLevelFolder', folder);
+    customLevelFolder = folder;
+}
+
+getCustomLevelFolder();
+
+function scanCustomLevels(){
     let levels = [];
-    for (let i = 0; i < folders.length; i++) {
-        let dataFile = path.join(folders[i], "Info.dat");
-        let level = JSON.parse(fs.readFileSync(dataFile, "utf8"));
-        level.folder = folders[i];
-        level.fullImagePath = path.join(folders[i], level._coverImageFilename);
-        levels.push(level);
+    try {
+        let folders = fs.readdirSync(customLevelFolder)
+            .map(file => path.join(customLevelFolder, file))
+            .filter(path => fs.statSync(path).isDirectory());
+        for (let i = 0; i < folders.length; i++) {
+            try {
+                let dataFile = path.join(folders[i], "Info.dat");
+                let level = JSON.parse(fs.readFileSync(dataFile, "utf8"));
+                level.folder = folders[i];
+                level.fullImagePath = path.join(folders[i], level._coverImageFilename);
+                levels.push(level);
+            }
+            catch (e) {
+                console.error("Error scanning custom level: " + e);
+                notify("Error scanning custom level: " + path.basename(folders[i]) + " (code: 9)");
+            }
+        }
+    }
+    catch (e) {
+        console.error("Error scanning custom levels: " + e);
+        notify("Error scanning custom levels. (code: 8)");
     }
     return levels;
 }
@@ -120,6 +148,18 @@ function removeCustomLevel(levelFolder, name){
     return true;
 }
 
+function selectFolder(){
+    let folder = dialog.showOpenDialogSync({
+        properties: ['openDirectory']
+    });
+
+    if (folder === undefined){
+        return;
+    }
+
+    return folder[0];
+}
+
 ipcMain.handle("scanCustomLevels", (event, args) => {
     return scanCustomLevels();
 });
@@ -130,6 +170,18 @@ ipcMain.handle("downloadCustomLevel", (event, args) => {
 
 ipcMain.handle("removeCustomLevel", (event, args) => {
     removeCustomLevel(args);
+});
+
+ipcMain.handle("setCustomLevelFolder", (event, args) => {
+    setCustomLevelFolder(args);
+});
+
+ipcMain.handle("getCustomLevelFolder", (event, args) => {
+    return customLevelFolder;
+});
+
+ipcMain.handle("selectFolder", (event, args) => {
+    return selectFolder();
 });
 
 
