@@ -63,12 +63,14 @@
                 <h5>Song Length: {songDuration()}</h5>
             </div>
 
-            <div class="levelInfoSpace">
-                <h4>Tags</h4>
-                {#each levelView.tags as tag}
-                    <h5>{tag}</h5>
-                {/each}
-            </div>
+            {#if levelView.tags}
+                <div class="levelInfoSpace">
+                    <h4>Tags</h4>
+                    {#each levelView.tags as tag}
+                        <h5>{tag}</h5>
+                    {/each}
+                </div>
+            {/if}
 
             <div class="levelInfoSpace">
                 <h4>Mods</h4>
