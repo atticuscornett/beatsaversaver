@@ -8,7 +8,7 @@
     let levelView = false;
 
     onMount(() => {
-        fetch("https://api.beatsaver.com/search/text/0?leaderboard=All&q=cheerleader&sortOrder=Relevance")
+        fetch("https://api.beatsaver.com/search/text/0?leaderboard=All&sortOrder=Latest")
             .then(response => response.json())
             .then(data => {
                 searchResults = data.docs;
@@ -22,12 +22,18 @@
                 searchResults = data.docs;
             });
     }
+
+    function handleEnter(event) {
+        if (event.key === "Enter") {
+            search();
+        }
+    }
 </script>
 
 <h1>Explore</h1>
 
 {#if levelView === false}
-    <input id="searchQuery">
+    <input on:keypress={handleEnter} id="searchQuery">
     <button on:click={search}>Search</button>
 
     <details>

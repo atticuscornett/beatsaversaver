@@ -84,7 +84,7 @@ function installCustomLevel(levelFile, levelData){
 
         console.log("Level extracted to " + levelFolder);
 
-        notify("Download finished: " + levelName + "(" + levelId + ")");
+        notify("Download finished: " + levelName + " (" + levelId + ")");
     }
     catch (e) {
         console.error("Error extracting level: " + e);
