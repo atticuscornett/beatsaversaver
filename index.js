@@ -4,7 +4,7 @@ const fs = require("fs");
 const AdmZip = require("adm-zip");
 const {get} = require("https");
 let customLevelFolder = "C:\\Program Files\\Oculus\\Software\\Software\\hyperbolic-magnetism-beat-saber\\Beat Saber_Data\\CustomLevels";
-
+let win;
 
 function scanCustomLevels(){
     let folders = fs.readdirSync(customLevelFolder)
@@ -22,9 +22,15 @@ function scanCustomLevels(){
     return levels;
 }
 
+function notify(message){
+    win.webContents.send('notify', {'message': message});
+}
+
 function downloadCustomLevel(id){
     console.log("Downloading level with id: " + id);
+
     if (id.includes("/")){
+        notify("Invalid level id. (id: " + id + ", code: 1)");
         return false;
     }
 
@@ -51,11 +57,13 @@ function downloadCustomLevel(id){
                 }).on('error', (err) => {
                     fs.unlink(destination, () => {
                         console.error('Error downloading file:', err);
+                        notify("Error downloading level. (id: " + id + ", code: 2)");
                     });
                 });
             }
             catch (e) {
                 console.error("Error downloading level: " + e);
+                notify("Error downloading level. (id: " + id + ", code: 3)");
             }
         })
 
@@ -63,19 +71,32 @@ function downloadCustomLevel(id){
 }
 
 function installCustomLevel(levelFile, levelData){
-    let zip = new AdmZip(levelFile);
-    let levelId = levelData.id;
-    let levelAuthorName = levelData.metadata.levelAuthorName;
-    let levelName = levelData.metadata.songName;
-    let levelFolder = path.join(customLevelFolder, levelId + " (" + levelName + " - " + levelAuthorName + ")");
+    try {
+        let zip = new AdmZip(levelFile);
+        let levelId = levelData.id;
+        let levelAuthorName = levelData.metadata.levelAuthorName;
+        let levelName = levelData.metadata.songName;
+        let levelFolder = path.join(customLevelFolder, levelId + " (" + levelName + " - " + levelAuthorName + ")");
 
-    console.log("Extracting " + levelFile + " to " + levelFolder);
+        console.log("Extracting " + levelFile + " to " + levelFolder);
 
-    zip.extractAllTo(levelFolder, true);
+        zip.extractAllTo(levelFolder, true);
 
-    console.log("Level extracted to " + levelFolder);
+        console.log("Level extracted to " + levelFolder);
 
-    fs.rmSync(levelFile);
+        notify("Download finished: " + levelName + "(" + levelId + ")");
+    }
+    catch (e) {
+        console.error("Error extracting level: " + e);
+        notify("Error installing level. (id: " + levelData.id + ", code: 4)");
+    }
+    try {
+        fs.rmSync(levelFile);
+    }
+    catch (e) {
+        console.error("Error deleting level zip: " + e);
+        notify("Error cleaning up downloads. (id: " + levelData.id + ", code: 5)");
+    }
 }
 
 ipcMain.handle("scanCustomLevels", (event, args) => {
@@ -88,7 +109,7 @@ ipcMain.handle("downloadCustomLevel", (event, args) => {
 
 
 const createWindow = () => {
-    const win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {

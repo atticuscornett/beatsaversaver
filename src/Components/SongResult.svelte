@@ -15,7 +15,7 @@
 
     async function requestDownload(){
         let downloadStarted = await electronAPI.downloadCustomLevel(song.id);
-        console.log("Download started: ", downloadStarted);
+        notify("Download started: " + song.metadata.songName + " (" + song.id + ")");
     }
 </script>
 

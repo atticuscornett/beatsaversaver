@@ -3,9 +3,29 @@
 	import ExplorePage from "./ExplorePage.svelte";
 	import DownloadPage from "./DownloadPage.svelte";
 	import SettingsPage from "./SettingsPage.svelte";
+	import Notification from "./Components/Notification.svelte";
+	import {fade} from "svelte/transition";
 
-	export let name;
 	let page = "explore";
+
+	let notifications = [];
+
+	function addNotification (notification) {
+		for (let i = 0; i < notifications.length; i++) {
+			if (notifications[i] === "") {
+				// Clear empty notifications
+				notifications.slice(i, 1);
+			}
+		}
+		notifications = [...notifications, notification];
+		console.log(notifications)
+	}
+
+	electronAPI.onNotify((e, message) => {
+		addNotification(message.message);
+	});
+
+	window.notify = addNotification;
 </script>
 
 <main>
@@ -19,7 +39,17 @@
 				<SettingsPage/>
 			{/if}
 
+			<div class="notifications">
+				{#each notifications as notifText}
+					{#if notifText !== ""}
+						<div transition:fade>
+							<Notification bind:notification={notifText} />
+						</div>
+					{/if}
+				{/each}
+			</div>
 		</div>
+
 	</div>
 	<NavBar bind:navpage={page} />
 </main>
@@ -34,6 +64,14 @@
 
 	.appMargin {
 		padding: 15px;
+	}
+
+	.notifications {
+		position: fixed;
+		bottom: 10vh;
+		padding: 10px;
+		z-index: 999;
+		width: 100%;
 	}
 
 	:global(body){
