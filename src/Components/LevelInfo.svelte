@@ -96,8 +96,27 @@
         </div>
     </div>
 
-    <div>
-        <h3>Community Info</h3>
+    <div class="levelInfo">
+        <h3>Community Stats</h3>
+        <div class="levelInfoFlex">
+            <div class="levelInfoSpace">
+                <h4>Popularity</h4>
+                <h5>Plays: {levelView.stats.plays}</h5>
+                <h5>Downloads: {levelView.stats.downloads}</h5>
+            </div>
+
+            <div class="levelInfoSpace">
+                <h4>Votes</h4>
+                <h5>Upvotes: {levelView.stats.upvotes}</h5>
+                <h5>Downvotes: {levelView.stats.downvotes}</h5>
+            </div>
+
+            <div class="levelInfoSpace">
+                <h4>Ratings</h4>
+                <h5>Score: {Math.round(levelView.stats.score*100)}%</h5>
+                <h5>Review: {levelView.stats.reviews}</h5>
+            </div>
+        </div>
     </div>
 </div>
 
