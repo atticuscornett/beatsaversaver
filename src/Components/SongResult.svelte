@@ -14,6 +14,9 @@
         return `${minutes}:${seconds}`;
     }
 
+    let songLength;
+    $: songLength = songDuration(song.metadata.duration);
+
     async function requestDownload(){
         let downloadStarted = await electronAPI.downloadCustomLevel(song.id);
         notify("Download started: " + song.metadata.songName + " (" + song.id + ")");
@@ -38,7 +41,7 @@
     <div class="sideDetails">
         <h5>{song.id}</h5>
         <h5>{song.metadata.bpm} bpm</h5>
-        <h5>{songDuration()}</h5>
+        <h5>{songLength}</h5>
         <a href="#" on:click={requestDownload}><h5>Download</h5></a>
     </div>
 </div>
