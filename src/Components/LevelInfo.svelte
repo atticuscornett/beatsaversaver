@@ -130,6 +130,7 @@
                     <h5>Notes: {diff.notes}</h5>
                     <h5>Notes per Second: {diff.nps}</h5>
                     <h5>Note Jump Speed {diff.njs}</h5>
+                    <h5>Note Jump Speed: {diff.njs}</h5>
                     <h5>Bombs: {diff.bombs}</h5>
                     <h5>Walls: {diff.obstacles}</h5>
                 </div>
