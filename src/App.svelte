@@ -42,7 +42,7 @@
 			<div class="notifications">
 				{#each notifications as notifText}
 					{#if notifText !== ""}
-						<div transition:fade>
+						<div transition:fade|global>
 							<Notification bind:notification={notifText} />
 						</div>
 					{/if}
