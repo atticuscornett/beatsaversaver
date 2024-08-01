@@ -192,7 +192,8 @@ const createWindow = () => {
         webPreferences: {
             preload: path.join(__dirname, "preload.js")
         },
-        icon: __dirname + "/icon.png"
+        icon: __dirname + "/icon.png",
+        autoHideMenuBar: true
     })
 
     win.loadFile(path.join(__dirname, "public/index.html"))
