@@ -33,13 +33,15 @@
     function moreInfo(){
         levelView = song;
     }
+
+    let paused = true;
 </script>
 
 <div class="songResult">
     <div class="imageContainer">
         <div class="coverImage" id={"coverImage" + song.id}>
-            <button class="playButton">
-                <img src="../src/Images/playButton.svg" alt="Play/Pause Button" class="playPauseImage">
+            <button class="playButton" on:click={() => paused = !paused}>
+                <img src={"../src/Images/" + (paused ? "play" : "pause") + "Button.svg"} alt="Play/Pause Button" class="playPauseImage">
             </button>
         </div>
         <h4>Score: {Math.floor(song.stats.score*100)}%</h4>
@@ -57,6 +59,10 @@
         <a href="#" on:click={requestDownload}><h5>Download</h5></a>
     </div>
 </div>
+
+<audio hidden bind:paused={paused}>
+    <source src={song.versions[0].previewURL} type="audio/mpeg">
+</audio>
 
 <style>
     div {
