@@ -10,7 +10,7 @@ let win;
 
 async function getCustomLevelFolder(){
     await storage.init();
-    let customLevelFolder = await storage.getItem('customLevelFolder');
+    customLevelFolder = await storage.getItem('customLevelFolder');
     if (customLevelFolder === undefined){
         customLevelFolder = "C:\\Program Files\\Oculus\\Software\\Software\\hyperbolic-magnetism-beat-saber\\Beat Saber_Data\\CustomLevels";
     }
