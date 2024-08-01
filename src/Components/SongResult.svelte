@@ -1,5 +1,6 @@
 <script>
     import AvailableModes from "./AvailableModes.svelte";
+    import {onMount} from "svelte";
 
     export let song;
     export let levelView;
@@ -22,6 +23,13 @@
         notify("Download started: " + song.metadata.songName + " (" + song.id + ")");
     }
 
+    let coverImageURL = song.versions[0].coverURL;
+
+    onMount(() => {
+        let coverImage = document.getElementById("coverImage" + song.id);
+        coverImage.style.backgroundImage = `url(${coverImageURL})`;
+    });
+
     function moreInfo(){
         levelView = song;
     }
@@ -29,7 +37,11 @@
 
 <div class="songResult">
     <div class="imageContainer">
-        <img class="albumCover" src="{song.versions[0].coverURL}" alt="Song Cover">
+        <div class="coverImage" id={"coverImage" + song.id}>
+            <button class="playButton">
+                <img src="../src/Images/playButton.svg" alt="Play/Pause Button" class="playPauseImage">
+            </button>
+        </div>
         <h4>Score: {Math.floor(song.stats.score*100)}%</h4>
     </div>
     <div>
@@ -61,18 +73,34 @@
         display: flex;
         direction: ltr;
         flex: 1 1 10px;
-        min-width: 600px;
+        min-width: 500px;
         margin: 8px;
         padding: 5px;
-    }
-
-    .albumCover {
-        height: 100px;
-        border-radius: 8px;
+        height: auto;
     }
 
     .imageContainer {
         text-align: center;
+    }
+
+    .coverImage {
+        background-size: cover;
+        background-position: center;
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+        align-content: center;
+    }
+
+    .playPauseImage {
+        width: 30px;
+    }
+
+    .playButton {
+        padding: 0;
+        background: none;
+        filter: invert(1);
+        border: none;
     }
 
     .sideDetails {
