@@ -232,7 +232,7 @@
         top: 10px;
         right: 30px;
         color: white;
-        border: none;
+        border: white 2px solid;
     }
 
     audio {
