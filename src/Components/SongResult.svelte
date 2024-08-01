@@ -27,6 +27,9 @@
     $: coverImageURL = song.versions[0].coverURL;
     $: refreshURL(coverImageURL);
 
+    let audioURL;
+    $: audioURL = song.versions[0].previewURL;
+
 
     function refreshURL(){
         if (document.getElementById("coverImage" + song.id) === null){
@@ -71,8 +74,7 @@
     </div>
 </div>
 
-<audio hidden bind:paused={paused}>
-    <source src={song.versions[0].previewURL} type="audio/mpeg">
+<audio hidden bind:paused={paused} src={audioURL}>
 </audio>
 
 <style>
