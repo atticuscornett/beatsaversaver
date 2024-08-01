@@ -1,6 +1,7 @@
 <script>
     import AvailableModes from "./AvailableModes.svelte";
     import {onMount} from "svelte";
+    import DownloadSong from "./DownloadSong.svelte";
 
     export let song;
     export let levelView;
@@ -17,11 +18,6 @@
 
     let songLength;
     $: songLength = songDuration(song.metadata.duration);
-
-    async function requestDownload(){
-        let downloadStarted = await electronAPI.downloadCustomLevel(song.id);
-        notify("Download started: " + song.metadata.songName + " (" + song.id + ")");
-    }
 
     let coverImageURL;
     $: coverImageURL = song.versions[0].coverURL;
@@ -70,7 +66,7 @@
         <h5>{song.id}</h5>
         <h5>{song.metadata.bpm} bpm</h5>
         <h5>{songLength}</h5>
-        <a href="#" on:click={requestDownload}><h5>Download</h5></a>
+        <DownloadSong song={song} />
     </div>
 </div>
 

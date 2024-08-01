@@ -1,4 +1,6 @@
 <script>
+    import DownloadSong from "./DownloadSong.svelte";
+
     export let levelView;
 
     function back() {
@@ -65,6 +67,7 @@
                 <h5>Level ID: {levelView.id}</h5>
                 <h5>BPM: {levelView.metadata.bpm}</h5>
                 <h5>Song Length: {songDuration()}</h5>
+                <DownloadSong song={levelView} />
             </div>
 
             {#if levelView.tags}
