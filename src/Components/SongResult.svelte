@@ -23,11 +23,22 @@
         notify("Download started: " + song.metadata.songName + " (" + song.id + ")");
     }
 
-    let coverImageURL = song.versions[0].coverURL;
+    let coverImageURL;
+    $: coverImageURL = song.versions[0].coverURL;
+    $: refreshURL(coverImageURL);
 
-    onMount(() => {
+
+    function refreshURL(){
+        if (document.getElementById("coverImage" + song.id) === null){
+            setTimeout(refreshURL, 100);
+            return;
+        }
         let coverImage = document.getElementById("coverImage" + song.id);
         coverImage.style.backgroundImage = `url(${coverImageURL})`;
+    }
+
+    onMount(() => {
+        refreshURL();
     });
 
     function moreInfo(){
