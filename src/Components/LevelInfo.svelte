@@ -29,6 +29,10 @@
     let modList = checkMods();
 
     let splitDescription = levelView.description.split("\n");
+    
+    let paused = true;
+    let previewProgress = 0;
+    let duration = 0;
 </script>
 
 <button class="backButton" on:click={back}>&lt; Back to Explore</button>
@@ -95,6 +99,15 @@
                     <h5>None</h5>
                 {/if}
             </div>
+
+            <div class="levelInfoSpace">
+                <h4>Song Preview</h4>
+
+                <button class="previewControl" on:click={() => paused = !paused}>
+                    <img class="playPauseImage" alt="Play/Pause Button" src={"../src/Images/" + (paused ? "play" : "pause") + "Button.svg"}>
+                </button>
+                <progress value={previewProgress} max="{duration}"></progress>
+            </div>
         </div>
     </div>
 
@@ -116,7 +129,9 @@
             <div class="levelInfoSpace">
                 <h4>Ratings</h4>
                 <h5>Score: {Math.round(levelView.stats.score*100)}%</h5>
-                <h5>Review: {levelView.stats.reviews}</h5>
+                {#if levelView.stats.reviews !== undefined}
+                    <h5>Reviews: {levelView.stats.reviews}</h5>
+                {/if}
             </div>
         </div>
     </div>
@@ -129,7 +144,6 @@
                     <h4>{diff.difficulty}</h4>
                     <h5>Notes: {diff.notes}</h5>
                     <h5>Notes per Second: {diff.nps}</h5>
-                    <h5>Note Jump Speed {diff.njs}</h5>
                     <h5>Note Jump Speed: {diff.njs}</h5>
                     <h5>Bombs: {diff.bombs}</h5>
                     <h5>Walls: {diff.obstacles}</h5>
@@ -137,6 +151,10 @@
             {/each}
         </div>
     </div>
+
+    <audio hidden bind:paused={paused} bind:currentTime={previewProgress} bind:duration>
+        <source src={levelView.versions[0].previewURL} type="audio/mpeg">
+    </audio>
 </div>
 
 <style>
@@ -215,5 +233,27 @@
         right: 30px;
         color: white;
         border: none;
+    }
+
+    audio {
+        height: 30px;
+        width: 150px;
+    }
+
+    .previewControl {
+        background: none;
+        border: none;
+        margin-top: 5px;
+        margin-right: 5px;
+        padding: 0;
+    }
+
+    .playPauseImage {
+        filter: invert(1);
+        width: 30px;
+    }
+
+    progress {
+        vertical-align: super;
     }
 </style>
