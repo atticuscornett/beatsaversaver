@@ -21,12 +21,25 @@
     {/if}
 </div>
 
+<div class="appMargin">
+    {#if downloadedLevels}
+        {#if downloadedLevels.length === 0}
+            <h2>No downloaded levels found.</h2>
+            <h4>Think this is an error? Check your custom level folder setting.</h4>
+        {/if}
+    {/if}
+</div>
+
 <style>
     #downloadList {
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
         align-items: flex-start;
+    }
+
+    .appMargin {
+        margin: 8px;
     }
 
     h1 {
