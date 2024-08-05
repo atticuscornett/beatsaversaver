@@ -2,6 +2,7 @@
     import AvailableModes from "./AvailableModes.svelte";
     import {onMount} from "svelte";
     import DownloadSong from "./DownloadSong.svelte";
+    import LevelPreview from "./LevelPreview.svelte";
 
     export let song;
     export let levelView;
@@ -44,7 +45,12 @@
         levelView = song;
     }
 
+    function showPreviewButton(){
+        showPreview = true;
+    }
+
     let paused = true;
+    let showPreview = false;
 </script>
 
 <div class="songResult">
@@ -67,7 +73,12 @@
         <h5>{song.metadata.bpm} bpm</h5>
         <h5>{songLength}</h5>
         <DownloadSong song={song} />
+        <a href="#" on:click={showPreviewButton}><h5>Preview Level</h5></a>
     </div>
+
+    {#if showPreview}
+        <LevelPreview levelId={song.id} bind:show={showPreview} />
+    {/if}
 </div>
 
 <audio hidden bind:paused={paused} src={audioURL}>
