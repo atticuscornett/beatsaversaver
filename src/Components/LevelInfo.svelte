@@ -1,5 +1,6 @@
 <script>
     import DownloadSong from "./DownloadSong.svelte";
+    import LevelPreview from "./LevelPreview.svelte";
 
     export let levelView;
 
@@ -28,6 +29,10 @@
         return mods;
     }
 
+    function showPreviewButton(){
+        showPreview = true;
+    }
+
     let modList = checkMods();
 
     let splitDescription = levelView.description.split("\n");
@@ -35,6 +40,7 @@
     let paused = true;
     let previewProgress = 0;
     let duration = 0;
+    let showPreview = false;
 </script>
 
 <button class="backButton" on:click={back}>&lt; Back to Explore</button>
@@ -68,6 +74,7 @@
                 <h5>BPM: {levelView.metadata.bpm}</h5>
                 <h5>Song Length: {songDuration()}</h5>
                 <DownloadSong song={levelView} />
+                <a href="#" on:click={showPreviewButton}><h5>Preview Level</h5></a>
             </div>
 
             {#if levelView.tags}
@@ -154,6 +161,10 @@
             {/each}
         </div>
     </div>
+
+    {#if showPreview}
+        <LevelPreview levelId={levelView.id} bind:show={showPreview} />
+    {/if}
 
     <audio hidden bind:paused={paused} bind:currentTime={previewProgress} bind:duration>
         <source src={levelView.versions[0].previewURL} type="audio/mpeg">
