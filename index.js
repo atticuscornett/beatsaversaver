@@ -104,6 +104,9 @@ function installCustomLevel(levelFile, levelData){
         let levelId = levelData.id;
         let levelAuthorName = levelData.metadata.levelAuthorName;
         let levelName = levelData.metadata.songName;
+        levelName = levelName.replace(/[^a-z0-9 ]/gi, '_');
+        levelAuthorName = levelAuthorName.replace(/[^a-z0-9 ]/gi, '_');
+        levelId = levelId.replace(/[^a-z0-9 ]/gi, '_');
         let levelFolder = path.join(customLevelFolder, levelId + " (" + levelName + " - " + levelAuthorName + ")");
 
         console.log("Extracting " + levelFile + " to " + levelFolder);
