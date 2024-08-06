@@ -24,5 +24,48 @@
     "electron-builder": "^24.13.3",
     "node-persist": "^4.0.2",
     "sirv-cli": "^2.0.0"
+  },
+  "build": {
+    "appId": "io.atticusc.beatsaversaver",
+    "productName": "beatsaversaver",
+    "icon": "icon.png",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.png",
+      "publish": [
+        "github"
+      ]
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "deb",
+          "arch": [
+            "x64",
+            "armv7l"
+          ]
+        },
+        "tar.gz",
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "icon.png"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "icon.png"
+    }
   }
 }
