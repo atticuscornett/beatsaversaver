@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "main": "index.js",
+  "description": "An unofficial, mod-free browser and installer for levels from Beat Saver",
+  "author": "Atticus Cornett <64325242+atticuscornett@users.noreply.github.com>",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
