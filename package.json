@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "adm-zip": "^0.5.14",
+    "electron-builder": "^24.13.3",
     "node-persist": "^4.0.2",
     "sirv-cli": "^2.0.0"
   }
