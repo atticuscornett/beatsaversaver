@@ -19,11 +19,11 @@
     "rollup-plugin-css-only": "^4.3.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.1.5",
+    "electron-builder": "^24.13.3",
     "svelte": "^4.0.0"
   },
   "dependencies": {
     "adm-zip": "^0.5.14",
-    "electron-builder": "^24.13.3",
     "node-persist": "^4.0.2",
     "sirv-cli": "^2.0.0"
   },
