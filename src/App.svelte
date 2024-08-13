@@ -85,4 +85,8 @@
 		background-color: #070707;
 		color: white;
 	}
+
+	:global(button){
+		cursor: pointer;
+	}
 </style>
