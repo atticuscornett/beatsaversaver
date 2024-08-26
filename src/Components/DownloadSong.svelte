@@ -12,9 +12,20 @@
         return mods;
     }
 
-    function requestDownload(){
-        if(songMods[4]){
-            modPopup = true;
+    async function requestDownload() {
+        if (songMods[4]) {
+            let settings = await electronAPI.getSettings();
+            if (settings["modWarnings"]["chroma"] && songMods[0]) {
+                modPopup = true;
+            } else if (settings["modWarnings"]["ne"] && songMods[1]) {
+                modPopup = true;
+            } else if (settings["modWarnings"]["me"] && songMods[2]) {
+                modPopup = true;
+            } else if (settings["modWarnings"]["cinema"] && songMods[3]) {
+                modPopup = true;
+            } else {
+                downloadLevel();
+            }
         } else {
             downloadLevel();
         }
