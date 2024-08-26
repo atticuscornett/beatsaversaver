@@ -38,7 +38,22 @@
 
     <details>
         <summary>Advanced Search</summary>
-        <p>Coming soon...</p>
+        <div>
+            <h4>Mods</h4>
+            <input type="checkbox" id="chromaFilter">
+            <label for="chromaFilter">Chroma</label>
+            <br>
+            <input type="checkbox" id="neFilter">
+            <label for="neFilter">Noodle Extensions</label>
+            <br>
+            <input type="checkbox" id="meFilter">
+            <label for="meFilter">Mapping Extensions</label>
+            <br>
+            <input type="checkbox" id="cinemaFilter">
+            <label for="cinemaFilter">Cinema</label>
+
+            <button>Apply Filters</button>
+        </div>
     </details>
 {/if}
 
@@ -85,5 +100,13 @@
         padding: 8px;
         border-radius: 8px;
         background: #222222;
+    }
+
+    input[type="checkbox"] {
+        margin: 4px;
+    }
+
+    label {
+        display: inline;
     }
 </style>
