@@ -7,5 +7,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     removeCustomLevel: (folder, name) => ipcRenderer.invoke("removeCustomLevel", folder, name),
     setCustomLevelFolder: (folder) => ipcRenderer.invoke("setCustomLevelFolder", folder),
     getCustomLevelFolder: () => ipcRenderer.invoke("getCustomLevelFolder"),
-    selectFolder: () => ipcRenderer.invoke("selectFolder")
+    selectFolder: () => ipcRenderer.invoke("selectFolder"),
+    getSettings: () => ipcRenderer.invoke("getSettings"),
+    setSettings: (settings) => ipcRenderer.invoke("setSettings", settings)
 });

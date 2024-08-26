@@ -6,14 +6,29 @@ const {get} = require("https");
 const storage = require('node-persist');
 
 let customLevelFolder = "C:\\Program Files\\Oculus\\Software\\Software\\hyperbolic-magnetism-beat-saber\\Beat Saber_Data\\CustomLevels";
+let settings = {};
 let win;
 
-async function getCustomLevelFolder(){
+async function setupStorage(){
     await storage.init();
     customLevelFolder = await storage.getItem('customLevelFolder');
     if (customLevelFolder === undefined){
         customLevelFolder = "C:\\Program Files\\Oculus\\Software\\Software\\hyperbolic-magnetism-beat-saber\\Beat Saber_Data\\CustomLevels";
     }
+
+    settings = await storage.getItem('settings');
+    if (settings === undefined){
+        settings = {};
+    }
+    if (settings["modWarnings"] === undefined){
+        settings["modWarnings"] = {};
+        settings["modWarnings"]["chroma"] = true;
+        settings["modWarnings"]["ne"] = true;
+        settings["modWarnings"]["me"] = true;
+        settings["modWarnings"]["cinema"] = true;
+    }
+
+    storage.setItem('settings', settings);
 }
 
 function setCustomLevelFolder(folder){
@@ -21,7 +36,7 @@ function setCustomLevelFolder(folder){
     customLevelFolder = folder;
 }
 
-getCustomLevelFolder();
+setupStorage();
 
 function scanCustomLevels(){
     let levels = [];
@@ -162,6 +177,15 @@ function selectFolder(){
 
     return folder[0];
 }
+
+ipcMain.handle("getSettings", (event, args) => {
+    return settings;
+});
+
+ipcMain.handle("setSettings", (event, args) => {
+    settings = args;
+    storage.setItem('settings', settings);
+});
 
 ipcMain.handle("scanCustomLevels", (event, args) => {
     return scanCustomLevels();
