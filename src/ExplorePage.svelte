@@ -51,9 +51,9 @@
             <br>
             <input type="checkbox" id="cinemaFilter">
             <label for="cinemaFilter">Cinema</label>
-
-            <button>Apply Filters</button>
         </div>
+        <br>
+        <button class="filterButton">Apply Filters</button>
     </details>
 {/if}
 
@@ -108,5 +108,14 @@
 
     label {
         display: inline;
+    }
+
+    .filterButton {
+        margin-top: 8px;
+        background-color: hsl(226, 70%, 44%);
+        padding: 5px;
+        border: 0;
+        width: fit-content;
+        color: white;
     }
 </style>
