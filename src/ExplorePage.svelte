@@ -28,6 +28,19 @@
             search();
         }
     }
+
+    function checkBoxCycle(event){
+        let checkbox = event.target;
+        if (!checkbox.checked && !checkbox.indeterminate && checkbox.tagName === "INPUT") {
+            checkbox.indeterminate = true;
+            checkbox.wasIndeterminate = true;
+            console.log("cheese")
+        }
+        else if (checkbox.wasIndeterminate && checkbox.tagName === "INPUT") {
+            checkbox.wasIndeterminate = false;
+            checkbox.checked = false;
+        }
+    }
 </script>
 
 <h1>Explore</h1>
@@ -38,7 +51,7 @@
 
     <details>
         <summary>Advanced Search</summary>
-        <div>
+        <div on:change={checkBoxCycle}>
             <h4>Mods</h4>
             <input type="checkbox" id="chromaFilter">
             <label for="chromaFilter">Chroma</label>
