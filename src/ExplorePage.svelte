@@ -51,19 +51,32 @@
 
     <details>
         <summary>Advanced Search</summary>
-        <div on:change={checkBoxCycle}>
-            <h4>Mods</h4>
-            <input type="checkbox" id="chromaFilter">
-            <label for="chromaFilter">Chroma</label>
-            <br>
-            <input type="checkbox" id="neFilter">
-            <label for="neFilter">Noodle Extensions</label>
-            <br>
-            <input type="checkbox" id="meFilter">
-            <label for="meFilter">Mapping Extensions</label>
-            <br>
-            <input type="checkbox" id="cinemaFilter">
-            <label for="cinemaFilter">Cinema</label>
+        <div class="advancedFlex">
+            <div class="filterSection" on:change={checkBoxCycle}>
+                <h4>General</h4>
+                <input type="checkbox" id="curatedFilter">
+                <label for="curatedFilter">Curated</label>
+                <br>
+                <input type="checkbox" id="verifiedCreatorFilter">
+                <label for="verifiedCreatorFilter">Verified Creator</label>
+                <br>
+                <input type="checkbox" id="fullSpreadFilter">
+                <label for="fullSpreadFilter">Full Spread</label>
+            </div>
+            <div class="filterSection" on:change={checkBoxCycle}>
+                <h4>Mods</h4>
+                <input type="checkbox" id="chromaFilter">
+                <label for="chromaFilter">Chroma</label>
+                <br>
+                <input type="checkbox" id="neFilter">
+                <label for="neFilter">Noodle Extensions</label>
+                <br>
+                <input type="checkbox" id="meFilter">
+                <label for="meFilter">Mapping Extensions</label>
+                <br>
+                <input type="checkbox" id="cinemaFilter">
+                <label for="cinemaFilter">Cinema</label>
+            </div>
         </div>
         <br>
         <button class="filterButton">Apply Filters</button>
@@ -130,5 +143,13 @@
         border: 0;
         width: fit-content;
         color: white;
+    }
+
+    .advancedFlex {
+        display: flex;
+    }
+
+    .filterSection {
+        margin-right: 8px;
     }
 </style>
