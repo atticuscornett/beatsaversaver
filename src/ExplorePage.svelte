@@ -150,6 +150,6 @@
     }
 
     .filterSection {
-        margin-right: 8px;
+        margin-right: 15px;
     }
 </style>
