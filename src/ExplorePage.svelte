@@ -77,9 +77,29 @@
                 <input type="checkbox" id="cinemaFilter">
                 <label for="cinemaFilter">Cinema</label>
             </div>
+            <div class="filterSection">
+                <h4>Miscellaneous</h4>
+                <label for="leaderboardFilter">Leaderboard</label>
+                <br>
+                <select>
+                    <option value="All">All</option>
+                    <option value="Ranked">Ranked</option>
+                    <option value="BeatLeader">BeatLeader</option>
+                    <option value="ScoreSaber">ScoreSaber</option>
+                </select>
+                <br>
+                <label for="leaderboardFilter">Sort By</label>
+                <br>
+                <select>
+                    <option value="Relevance">Relevance</option>
+                    <option value="Latest">Latest</option>
+                    <option value="Rating">Rating</option>
+                    <option value="Curated">Curated</option>
+                </select>
+            </div>
         </div>
         <br>
-        <button class="filterButton">Apply Filters</button>
+        <button class="filterButton">Search</button>
     </details>
 {/if}
 
@@ -151,5 +171,10 @@
 
     .filterSection {
         margin-right: 15px;
+    }
+
+    select {
+        font-size: 15px;
+        padding: 2px;
     }
 </style>
