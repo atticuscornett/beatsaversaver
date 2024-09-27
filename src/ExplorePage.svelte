@@ -7,6 +7,17 @@
 
     let levelView = false;
 
+    let minNPS = 0;
+    let maxNPS = 20;
+
+    $: if (minNPS >= maxNPS) {
+        minNPS = maxNPS - 1;
+        if (minNPS < 0) {
+            minNPS = 0;
+            maxNPS = 1;
+        }
+    }
+
     onMount(() => {
         fetch("https://api.beatsaver.com/search/text/0?leaderboard=All&sortOrder=Latest")
             .then(response => response.json())
@@ -78,19 +89,29 @@
                 <label for="cinemaFilter">Cinema</label>
             </div>
             <div class="filterSection">
+                <h4>Speed</h4>
+                <label for="minNPS">Minimum NPS ({minNPS} NPS)</label>
+                <br>
+                <input id="minNPS" type="range" min="0" max="20" bind:value={minNPS}>
+                <br>
+                <label for="maxNPS">Maximum NPS ({maxNPS} NPS)</label>
+                <br>
+                <input id="maxNPS" type="range" min="0" max="20" bind:value={maxNPS}>
+            </div>
+            <div class="filterSection">
                 <h4>Miscellaneous</h4>
                 <label for="leaderboardFilter">Leaderboard</label>
                 <br>
-                <select>
+                <select id="leaderboardFilter">
                     <option value="All">All</option>
                     <option value="Ranked">Ranked</option>
                     <option value="BeatLeader">BeatLeader</option>
                     <option value="ScoreSaber">ScoreSaber</option>
                 </select>
                 <br>
-                <label for="leaderboardFilter">Sort By</label>
+                <label for="sortFilter">Sort By</label>
                 <br>
-                <select>
+                <select id="sortFilter">
                     <option value="Relevance">Relevance</option>
                     <option value="Latest">Latest</option>
                     <option value="Rating">Rating</option>
