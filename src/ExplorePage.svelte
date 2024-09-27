@@ -52,6 +52,86 @@
             checkbox.checked = false;
         }
     }
+
+    function advancedSearch(){
+        let link = "https://api.beatsaver.com/search/text/0?";
+
+        link += `q=${document.getElementById("searchQuery").value}&`;
+
+        let curated = document.getElementById("curatedFilter").checked;
+        if (curated.indeterminate) {
+            link += "curated=false&";
+        }
+        else if (curated.checked){
+            link += "curated=true&";
+        }
+
+        let verifiedCreator = document.getElementById("verifiedCreatorFilter").checked;
+        if (verifiedCreator.indeterminate) {
+            link += "verified=false&";
+        }
+        else if (verifiedCreator.checked){
+            link += "verified=true&";
+        }
+
+        let fullSpread = document.getElementById("fullSpreadFilter").checked;
+        if (fullSpread.indeterminate) {
+            link += "fullSpread=false&";
+        }
+        else if (fullSpread.checked){
+            link += "fullSpread=true&";
+        }
+
+        let chroma = document.getElementById("chromaFilter").checked;
+        if (chroma.indeterminate) {
+            link += "chroma=false&";
+        }
+        else if (chroma.checked){
+            link += "chroma=true&";
+        }
+
+        let ne = document.getElementById("neFilter").checked;
+        if (ne.indeterminate) {
+            link += "noodle=false&";
+        }
+        else if (ne.checked){
+            link += "noodle=true&";
+        }
+
+        let me = document.getElementById("meFilter").checked;
+        if (me.indeterminate) {
+            link += "me=false&";
+        }
+        else if (me.checked){
+            link += "me=true&";
+        }
+
+        let cinema = document.getElementById("cinemaFilter").checked;
+        if (cinema.indeterminate) {
+            link += "cinema=false&";
+        }
+        else if (cinema.checked){
+            link += "cinema=true&";
+        }
+
+        let minNPS = document.getElementById("minNPS").value;
+        link += `minNps=${minNPS}&`;
+
+        let maxNPS = document.getElementById("maxNPS").value;
+        link += `maxNps=${maxNPS}&`;
+
+        let leaderboard = document.getElementById("leaderboardFilter").value;
+        link += `leaderboard=${leaderboard}&`;
+
+        let sort = document.getElementById("sortFilter").value;
+        link += `sortOrder=${sort}`;
+
+        fetch(link)
+            .then(response => response.json())
+            .then(data => {
+                searchResults = data.docs;
+            });
+    }
 </script>
 
 <h1>Explore</h1>
@@ -120,7 +200,7 @@
             </div>
         </div>
         <br>
-        <button class="filterButton">Search</button>
+        <button class="filterButton" on:click={advancedSearch}>Search</button>
     </details>
 {/if}
 
