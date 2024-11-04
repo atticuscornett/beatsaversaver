@@ -18,9 +18,9 @@
 </script>
 
 <div>
-    <button on:click={explore}>Explore</button>
-    <button on:click={downloads}>Downloads</button>
-    <button on:click={settings}>Settings</button>
+    <button on:click={explore}><img src="../src/Images/search.svg" alt="Explore"></button>
+    <button on:click={downloads}><img src="../src/Images/downloads.svg" alt="Downloads"></button>
+    <button on:click={settings}><img src="../src/Images/settings.svg" alt="Settings"></button>
 </div>
 
 <style>
@@ -34,9 +34,13 @@
     button {
         height: 100%;
         width: 33.33%;
-        background-color: #f1f1f1;
+        background-color: #111111;
         border: none;
         float: left;
+    }
+
+    img {
+        height: 55%;
     }
 
 </style>
