@@ -6,19 +6,27 @@
     let hasExpert = false;
     let hasExpertPlus = false;
 
-    let songDifficulties = song.versions[0].diffs;
+    let songDifficulties;
 
-    for (let dif of songDifficulties) {
-        if (dif.difficulty === "Easy") {
-            hasEasy = true;
-        } else if (dif.difficulty === "Normal") {
-            hasNormal = true;
-        } else if (dif.difficulty === "Hard") {
-            hasHard = true;
-        } else if (dif.difficulty === "Expert") {
-            hasExpert = true;
-        } else if (dif.difficulty === "ExpertPlus") {
-            hasExpertPlus = true;
+    $: {
+        hasEasy = false;
+        hasNormal = false;
+        hasHard = false;
+        hasExpert = false;
+        hasExpertPlus = false;
+        songDifficulties = song.versions[0].diffs;
+        for (let dif of songDifficulties) {
+            if (dif.difficulty === "Easy") {
+                hasEasy = true;
+            } else if (dif.difficulty === "Normal") {
+                hasNormal = true;
+            } else if (dif.difficulty === "Hard") {
+                hasHard = true;
+            } else if (dif.difficulty === "Expert") {
+                hasExpert = true;
+            } else if (dif.difficulty === "ExpertPlus") {
+                hasExpertPlus = true;
+            }
         }
     }
 </script>
