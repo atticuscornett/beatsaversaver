@@ -1,6 +1,4 @@
 <script>
-    import { run } from 'svelte/legacy';
-
     /** @type {{song: any}} */
     let { song } = $props();
     let hasEasy = $state(false);
@@ -11,7 +9,7 @@
 
     let songDifficulties = $state();
 
-    run(() => {
+    $effect(() => {
         hasEasy = false;
         hasNormal = false;
         hasHard = false;

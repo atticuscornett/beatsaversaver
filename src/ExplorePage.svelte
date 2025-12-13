@@ -1,6 +1,4 @@
 <script>
-    import { run } from 'svelte/legacy';
-
     import {onMount} from "svelte";
     import SongResult from "./Components/SongResult.svelte";
     import LevelInfo from "./Components/LevelInfo.svelte";
@@ -12,7 +10,7 @@
     let minNPS = $state(0);
     let maxNPS = $state(20);
 
-    run(() => {
+    $effect(() => {
         if (minNPS >= maxNPS) {
             minNPS = maxNPS - 1;
             if (minNPS < 0) {

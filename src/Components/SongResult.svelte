@@ -1,6 +1,4 @@
 <script>
-    import { run } from 'svelte/legacy';
-
     import AvailableModes from "./AvailableModes.svelte";
     import {onMount} from "svelte";
     import DownloadSong from "./DownloadSong.svelte";
@@ -50,12 +48,13 @@
     let paused = $state(true);
     let showPreview = $state(false);
     
-    run(() => {
+    $effect(() => {
         coverImageURL = song.versions[0].coverURL;
     });
-    run(() => {
+
+    $effect(() => {
         refreshURL(coverImageURL);
-    });
+    })
     
 </script>
 
