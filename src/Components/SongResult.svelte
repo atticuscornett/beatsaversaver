@@ -5,7 +5,7 @@
     import LevelPreview from "./LevelPreview.svelte";
 
     /** @type {{song: any, levelView: any}} */
-    let { song, levelView = $bindable() } = $props();
+    let { song, levelView = $bindable(), playingSong = $bindable() } = $props();
 
     function songDuration(){
         let duration = song.metadata.duration;
@@ -55,13 +55,19 @@
     $effect(() => {
         refreshURL(coverImageURL);
     })
+
+    $effect(() => {
+        if (playingSong !== song.id){
+            paused = true;
+        }
+    })
     
 </script>
 
 <div class="songResult">
     <div class="imageContainer">
         <div class="coverImage" id={"coverImage" + song.id}>
-            <button class="playButton" onclick={() => paused = !paused}>
+            <button class="playButton" onclick={() => {playingSong = song.id; paused = !paused}}>
                 <img src={"../src/Images/" + (paused ? "play" : "pause") + "Button.svg"} alt="Play/Pause Button" class="playPauseImage">
             </button>
         </div>

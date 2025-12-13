@@ -10,6 +10,8 @@
     let minNPS = $state(0);
     let maxNPS = $state(20);
 
+    let playingSong = $state("");
+
     $effect(() => {
         if (minNPS >= maxNPS) {
             minNPS = maxNPS - 1;
@@ -214,7 +216,7 @@
     {:else}
         <div id="searchResults">
             {#each searchResults as song}
-                <SongResult song={song} bind:levelView={levelView} />
+                <SongResult song={song} bind:levelView={levelView} bind:playingSong />
             {/each}
         </div>
     {/if}
