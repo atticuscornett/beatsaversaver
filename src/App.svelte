@@ -40,10 +40,10 @@
 			{/if}
 
 			<div class="notifications">
-				{#each notifications as notifText}
+				{#each notifications as notifText, i}
 					{#if notifText !== ""}
 						<div transition:fade|global>
-							<Notification bind:notification={notifText} />
+							<Notification bind:notification={notifications[i]} />
 						</div>
 					{/if}
 				{/each}
