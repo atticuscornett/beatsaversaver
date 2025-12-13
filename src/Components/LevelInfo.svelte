@@ -2,7 +2,8 @@
     import DownloadSong from "./DownloadSong.svelte";
     import LevelPreview from "./LevelPreview.svelte";
 
-    export let levelView;
+    /** @type {{levelView: any}} */
+    let { levelView = $bindable() } = $props();
 
     function back() {
         levelView = false;
@@ -37,13 +38,13 @@
 
     let splitDescription = levelView.description.split("\n");
     
-    let paused = true;
-    let previewProgress = 0;
-    let duration = 0;
-    let showPreview = false;
+    let paused = $state(true);
+    let previewProgress = $state(0);
+    let duration = $state(0);
+    let showPreview = $state(false);
 </script>
 
-<button class="backButton" on:click={back}>&lt; Back to Explore</button>
+<button class="backButton" onclick={back}>&lt; Back to Explore</button>
 
 <div class="header">
     <div class="headerImages">
@@ -74,7 +75,7 @@
                 <h5>BPM: {levelView.metadata.bpm}</h5>
                 <h5>Song Length: {songDuration()}</h5>
                 <DownloadSong song={levelView} />
-                <a href="#" on:click={showPreviewButton}><h5>Preview Level</h5></a>
+                <a href="#" onclick={showPreviewButton}><h5>Preview Level</h5></a>
             </div>
 
             {#if levelView.tags}
@@ -113,7 +114,7 @@
             <div class="levelInfoSpace">
                 <h4>Song Preview</h4>
 
-                <button class="previewControl" on:click={() => paused = !paused}>
+                <button class="previewControl" onclick={() => paused = !paused}>
                     <img class="playPauseImage" alt="Play/Pause Button" src={"../src/Images/" + (paused ? "play" : "pause") + "Button.svg"}>
                 </button>
                 <progress value={previewProgress} max="{duration}"></progress>

@@ -1,6 +1,6 @@
 <script>
-    export let levelId;
-    export let show;
+    /** @type {{levelId: any, show: any}} */
+    let { levelId, show = $bindable() } = $props();
 
     function close(){
         show = false;
@@ -11,9 +11,9 @@
     }
 </script>
 
-<div class="background" on:click={close}>
-    <div on:click={preventClose}>
-        <button on:click={close}>x</button>
+<div class="background" onclick={close}>
+    <div onclick={preventClose}>
+        <button onclick={close}>x</button>
         <iframe src="https://allpoland.github.io/ArcViewer/?id={levelId}" title="Level Preview"></iframe>
     </div>
 </div>

@@ -1,5 +1,6 @@
 <script>
-    export let navpage;
+    /** @type {{navpage: any}} */
+    let { navpage = $bindable() } = $props();
 
     function explore() {
         console.log("explore")
@@ -18,9 +19,9 @@
 </script>
 
 <div>
-    <button on:click={explore}><img src="../src/Images/search.svg" alt="Explore"></button>
-    <button on:click={downloads}><img src="../src/Images/downloads.svg" alt="Downloads"></button>
-    <button on:click={settings}><img src="../src/Images/settings.svg" alt="Settings"></button>
+    <button onclick={explore}><img src="../src/Images/search.svg" alt="Explore"></button>
+    <button onclick={downloads}><img src="../src/Images/downloads.svg" alt="Downloads"></button>
+    <button onclick={settings}><img src="../src/Images/settings.svg" alt="Settings"></button>
 </div>
 
 <style>

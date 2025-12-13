@@ -1,14 +1,14 @@
 <script>
     import {onMount} from "svelte";
 
-    let settings = {
+    let settings = $state({
         "modWarnings": {
             "chroma": false,
             "ne": false,
             "me": false,
             "cinema": false
         }
-    }
+    })
 
     function setCustomLevelFolder(){
         electronAPI.setCustomLevelFolder(document.getElementById("customLevelFolder").value);
@@ -34,11 +34,11 @@
 
 <h1>Settings</h1>
 
-<div class="settingsMargin" on:change={saveSettings}>
+<div class="settingsMargin" onchange={saveSettings}>
     <h2>Beat Saber Custom Level Folder</h2>
     <h5>Typically C:\Program Files\Oculus\Software\Software\hyperbolic-magnetism-beat-saber\Beat Saber_Data\CustomLevels in Meta Quest Link</h5>
-    <input on:change={setCustomLevelFolder} id="customLevelFolder">
-    <button on:click={selectCustomLevelFolder}>...</button>
+    <input onchange={setCustomLevelFolder} id="customLevelFolder">
+    <button onclick={selectCustomLevelFolder}>...</button>
 
     <h2>Mod Warnings</h2>
     <h5>BeatSaverSaver will show a popup if a mod is required for a level you are downloading.</h5>

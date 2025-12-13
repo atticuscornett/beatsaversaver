@@ -1,14 +1,17 @@
 <script>
-    export let song;
-    let hasEasy = false;
-    let hasNormal = false;
-    let hasHard = false;
-    let hasExpert = false;
-    let hasExpertPlus = false;
+    import { run } from 'svelte/legacy';
 
-    let songDifficulties;
+    /** @type {{song: any}} */
+    let { song } = $props();
+    let hasEasy = $state(false);
+    let hasNormal = $state(false);
+    let hasHard = $state(false);
+    let hasExpert = $state(false);
+    let hasExpertPlus = $state(false);
 
-    $: {
+    let songDifficulties = $state();
+
+    run(() => {
         hasEasy = false;
         hasNormal = false;
         hasHard = false;
@@ -28,7 +31,7 @@
                 hasExpertPlus = true;
             }
         }
-    }
+    });
 </script>
 
 {#if hasEasy}

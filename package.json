@@ -18,9 +18,9 @@
     "rollup": "^4.22.4",
     "rollup-plugin-css-only": "^4.3.0",
     "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-svelte": "^7.1.5",
+    "rollup-plugin-svelte": "^7.2.2",
     "electron-builder": "^24.13.3",
-    "svelte": "^4.2.19"
+    "svelte": "^5.0.0"
   },
   "dependencies": {
     "adm-zip": "^0.5.14",

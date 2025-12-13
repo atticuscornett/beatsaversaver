@@ -1,22 +1,26 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import {onMount} from "svelte";
     import SongResult from "./Components/SongResult.svelte";
     import LevelInfo from "./Components/LevelInfo.svelte";
 
-    let searchResults = false;
+    let searchResults = $state(false);
 
-    let levelView = false;
+    let levelView = $state(false);
 
-    let minNPS = 0;
-    let maxNPS = 20;
+    let minNPS = $state(0);
+    let maxNPS = $state(20);
 
-    $: if (minNPS >= maxNPS) {
-        minNPS = maxNPS - 1;
-        if (minNPS < 0) {
-            minNPS = 0;
-            maxNPS = 1;
+    run(() => {
+        if (minNPS >= maxNPS) {
+            minNPS = maxNPS - 1;
+            if (minNPS < 0) {
+                minNPS = 0;
+                maxNPS = 1;
+            }
         }
-    }
+    });
 
     onMount(() => {
         fetch("https://api.beatsaver.com/search/text/0?leaderboard=All&sortOrder=Latest")
@@ -137,13 +141,13 @@
 <h1>Explore</h1>
 
 {#if levelView === false}
-    <input on:keypress={handleEnter} id="searchQuery">
-    <button on:click={search}>Search</button>
+    <input onkeypress={handleEnter} id="searchQuery">
+    <button onclick={search}>Search</button>
 
     <details>
         <summary>Advanced Search</summary>
         <div class="advancedFlex">
-            <div class="filterSection" on:change={checkBoxCycle}>
+            <div class="filterSection" onchange={checkBoxCycle}>
                 <h4>General</h4>
                 <input type="checkbox" id="curatedFilter">
                 <label for="curatedFilter">Curated</label>
@@ -154,7 +158,7 @@
                 <input type="checkbox" id="fullSpreadFilter">
                 <label for="fullSpreadFilter">Full Spread</label>
             </div>
-            <div class="filterSection" on:change={checkBoxCycle}>
+            <div class="filterSection" onchange={checkBoxCycle}>
                 <h4>Mods</h4>
                 <input type="checkbox" id="chromaFilter">
                 <label for="chromaFilter">Chroma</label>
@@ -200,7 +204,7 @@
             </div>
         </div>
         <br>
-        <button class="filterButton" on:click={advancedSearch}>Search</button>
+        <button class="filterButton" onclick={advancedSearch}>Search</button>
     </details>
 {/if}
 

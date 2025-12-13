@@ -1,11 +1,13 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import AvailableModes from "./AvailableModes.svelte";
     import {onMount} from "svelte";
     import DownloadSong from "./DownloadSong.svelte";
     import LevelPreview from "./LevelPreview.svelte";
 
-    export let song;
-    export let levelView;
+    /** @type {{song: any, levelView: any}} */
+    let { song, levelView = $bindable() } = $props();
 
     function songDuration(){
         let duration = song.metadata.duration;
@@ -17,15 +19,11 @@
         return `${minutes}:${seconds}`;
     }
 
-    let songLength;
-    $: songLength = songDuration(song.metadata.duration);
+    let songLength = $derived(songDuration(song.metadata.duration));
 
-    let coverImageURL;
-    $: coverImageURL = song.versions[0].coverURL;
-    $: refreshURL(coverImageURL);
+    let coverImageURL = $state();
 
-    let audioURL;
-    $: audioURL = song.versions[0].previewURL;
+    let audioURL = $derived(song.versions[0].previewURL);
 
 
     function refreshURL(){
@@ -49,21 +47,29 @@
         showPreview = true;
     }
 
-    let paused = true;
-    let showPreview = false;
+    let paused = $state(true);
+    let showPreview = $state(false);
+    
+    run(() => {
+        coverImageURL = song.versions[0].coverURL;
+    });
+    run(() => {
+        refreshURL(coverImageURL);
+    });
+    
 </script>
 
 <div class="songResult">
     <div class="imageContainer">
         <div class="coverImage" id={"coverImage" + song.id}>
-            <button class="playButton" on:click={() => paused = !paused}>
+            <button class="playButton" onclick={() => paused = !paused}>
                 <img src={"../src/Images/" + (paused ? "play" : "pause") + "Button.svg"} alt="Play/Pause Button" class="playPauseImage">
             </button>
         </div>
         <h4>Score: {Math.floor(song.stats.score*100)}%</h4>
     </div>
     <div>
-        <a href="#" on:click={moreInfo}><h4>{song.name}</h4></a>
+        <a href="#" onclick={moreInfo}><h4>{song.name}</h4></a>
         <h5>{song.metadata.songAuthorName}</h5>
         <AvailableModes song={song} />
         <h5>{song.metadata.levelAuthorName}</h5>
@@ -73,7 +79,7 @@
         <h5>{song.metadata.bpm} bpm</h5>
         <h5>{songLength}</h5>
         <DownloadSong song={song} />
-        <a href="#" on:click={showPreviewButton}><h5>Preview Level</h5></a>
+        <a href="#" onclick={showPreviewButton}><h5>Preview Level</h5></a>
     </div>
 
     {#if showPreview}

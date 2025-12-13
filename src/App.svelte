@@ -6,9 +6,9 @@
 	import Notification from "./Components/Notification.svelte";
 	import {fade} from "svelte/transition";
 
-	let page = "explore";
+	let page = $state("explore");
 
-	let notifications = [];
+	let notifications = $state([]);
 
 	function addNotification (notification) {
 		for (let i = 0; i < notifications.length; i++) {
