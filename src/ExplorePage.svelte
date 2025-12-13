@@ -62,7 +62,7 @@
 
         link += `q=${document.getElementById("searchQuery").value}&`;
 
-        let curated = document.getElementById("curatedFilter").checked;
+        let curated = document.getElementById("curatedFilter");
         if (curated.indeterminate) {
             link += "curated=false&";
         }
@@ -70,7 +70,7 @@
             link += "curated=true&";
         }
 
-        let verifiedCreator = document.getElementById("verifiedCreatorFilter").checked;
+        let verifiedCreator = document.getElementById("verifiedCreatorFilter");
         if (verifiedCreator.indeterminate) {
             link += "verified=false&";
         }
@@ -78,7 +78,7 @@
             link += "verified=true&";
         }
 
-        let fullSpread = document.getElementById("fullSpreadFilter").checked;
+        let fullSpread = document.getElementById("fullSpreadFilter");
         if (fullSpread.indeterminate) {
             link += "fullSpread=false&";
         }
@@ -86,7 +86,7 @@
             link += "fullSpread=true&";
         }
 
-        let chroma = document.getElementById("chromaFilter").checked;
+        let chroma = document.getElementById("chromaFilter");
         if (chroma.indeterminate) {
             link += "chroma=false&";
         }
@@ -94,7 +94,7 @@
             link += "chroma=true&";
         }
 
-        let ne = document.getElementById("neFilter").checked;
+        let ne = document.getElementById("neFilter");
         if (ne.indeterminate) {
             link += "noodle=false&";
         }
@@ -102,7 +102,7 @@
             link += "noodle=true&";
         }
 
-        let me = document.getElementById("meFilter").checked;
+        let me = document.getElementById("meFilter");
         if (me.indeterminate) {
             link += "me=false&";
         }
@@ -110,7 +110,7 @@
             link += "me=true&";
         }
 
-        let cinema = document.getElementById("cinemaFilter").checked;
+        let cinema = document.getElementById("cinemaFilter");
         if (cinema.indeterminate) {
             link += "cinema=false&";
         }
