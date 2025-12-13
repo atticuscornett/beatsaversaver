@@ -8,6 +8,19 @@
 
     onMount(async () =>{
         downloadedLevels = await electronAPI.scanCustomLevels();
+
+        // Sort by song name
+        downloadedLevels.sort((a, b) => {
+            let nameA = a._songName.toUpperCase();
+            let nameB = b._songName.toUpperCase();
+            if (nameA < nameB) {
+                return -1;
+            }
+            if (nameA > nameB) {
+                return 1;
+            }
+            return 0;
+        });
     })
 </script>
 
