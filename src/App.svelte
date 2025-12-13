@@ -6,9 +6,9 @@
 	import Notification from "./Components/Notification.svelte";
 	import {fade} from "svelte/transition";
 
-	let page = "explore";
+	let page = $state("explore");
 
-	let notifications = [];
+	let notifications = $state([]);
 
 	function addNotification (notification) {
 		for (let i = 0; i < notifications.length; i++) {
@@ -40,10 +40,10 @@
 			{/if}
 
 			<div class="notifications">
-				{#each notifications as notifText}
+				{#each notifications as notifText, i}
 					{#if notifText !== ""}
 						<div transition:fade|global>
-							<Notification bind:notification={notifText} />
+							<Notification bind:notification={notifications[i]} />
 						</div>
 					{/if}
 				{/each}

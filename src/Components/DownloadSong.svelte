@@ -1,5 +1,6 @@
 <script>
-    export let song;
+    /** @type {{song: any}} */
+    let { song } = $props();
 
     function checkMods(){
         // Mods - Chroma, Noodle Extensions, Mapping Extensions, Cinema, Any
@@ -37,12 +38,12 @@
         notify("Download started: " + song.metadata.songName + " (" + song.id + ")");
     }
 
-    let modPopup = false;
-    let songMods;
-    $: songMods = checkMods(song);
+    let modPopup = $state(false);
+    let songMods = $derived(checkMods(song));
+    
 </script>
 
-<a href="#" on:click={requestDownload}><h5>Download</h5></a>
+<a href="#" onclick={requestDownload}><h5>Download</h5></a>
 
 {#if modPopup}
     <div class="background">
@@ -63,8 +64,8 @@
             {/if}
             <h3>Do you want to download?</h3>
             <h4>
-                <a href="#" on:click={downloadLevel}>Yes</a> |
-                <a href="#" on:click={() => modPopup = false}>No</a>
+                <a href="#" onclick={downloadLevel}>Yes</a> |
+                <a href="#" onclick={() => modPopup = false}>No</a>
             </h4>
             <h6>Tired of this popup? Change your mod warning settings in the settings page.</h6>
         </div>

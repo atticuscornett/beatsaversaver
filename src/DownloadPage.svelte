@@ -4,7 +4,7 @@
     import {onMount} from "svelte";
     import ScannedSong from "./Components/ScannedSong.svelte";
 
-    let downloadedLevels;
+    let downloadedLevels = $state();
 
     onMount(async () =>{
         downloadedLevels = await electronAPI.scanCustomLevels();

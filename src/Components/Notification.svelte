@@ -1,7 +1,8 @@
 <script>
     import {onMount} from "svelte";
 
-    export let notification;
+    /** @type {{notification: any}} */
+    let { notification = $bindable() } = $props();
 
     onMount(() => {
         setTimeout(() => {

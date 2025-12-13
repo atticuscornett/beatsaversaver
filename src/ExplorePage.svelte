@@ -3,20 +3,22 @@
     import SongResult from "./Components/SongResult.svelte";
     import LevelInfo from "./Components/LevelInfo.svelte";
 
-    let searchResults = false;
+    let searchResults = $state(false);
 
-    let levelView = false;
+    let levelView = $state(false);
 
-    let minNPS = 0;
-    let maxNPS = 20;
+    let minNPS = $state(0);
+    let maxNPS = $state(20);
 
-    $: if (minNPS >= maxNPS) {
-        minNPS = maxNPS - 1;
-        if (minNPS < 0) {
-            minNPS = 0;
-            maxNPS = 1;
+    $effect(() => {
+        if (minNPS >= maxNPS) {
+            minNPS = maxNPS - 1;
+            if (minNPS < 0) {
+                minNPS = 0;
+                maxNPS = 1;
+            }
         }
-    }
+    });
 
     onMount(() => {
         fetch("https://api.beatsaver.com/search/text/0?leaderboard=All&sortOrder=Latest")
@@ -58,7 +60,7 @@
 
         link += `q=${document.getElementById("searchQuery").value}&`;
 
-        let curated = document.getElementById("curatedFilter").checked;
+        let curated = document.getElementById("curatedFilter");
         if (curated.indeterminate) {
             link += "curated=false&";
         }
@@ -66,7 +68,7 @@
             link += "curated=true&";
         }
 
-        let verifiedCreator = document.getElementById("verifiedCreatorFilter").checked;
+        let verifiedCreator = document.getElementById("verifiedCreatorFilter");
         if (verifiedCreator.indeterminate) {
             link += "verified=false&";
         }
@@ -74,7 +76,7 @@
             link += "verified=true&";
         }
 
-        let fullSpread = document.getElementById("fullSpreadFilter").checked;
+        let fullSpread = document.getElementById("fullSpreadFilter");
         if (fullSpread.indeterminate) {
             link += "fullSpread=false&";
         }
@@ -82,7 +84,7 @@
             link += "fullSpread=true&";
         }
 
-        let chroma = document.getElementById("chromaFilter").checked;
+        let chroma = document.getElementById("chromaFilter");
         if (chroma.indeterminate) {
             link += "chroma=false&";
         }
@@ -90,7 +92,7 @@
             link += "chroma=true&";
         }
 
-        let ne = document.getElementById("neFilter").checked;
+        let ne = document.getElementById("neFilter");
         if (ne.indeterminate) {
             link += "noodle=false&";
         }
@@ -98,7 +100,7 @@
             link += "noodle=true&";
         }
 
-        let me = document.getElementById("meFilter").checked;
+        let me = document.getElementById("meFilter");
         if (me.indeterminate) {
             link += "me=false&";
         }
@@ -106,7 +108,7 @@
             link += "me=true&";
         }
 
-        let cinema = document.getElementById("cinemaFilter").checked;
+        let cinema = document.getElementById("cinemaFilter");
         if (cinema.indeterminate) {
             link += "cinema=false&";
         }
@@ -137,13 +139,13 @@
 <h1>Explore</h1>
 
 {#if levelView === false}
-    <input on:keypress={handleEnter} id="searchQuery">
-    <button on:click={search}>Search</button>
+    <input onkeypress={handleEnter} id="searchQuery">
+    <button onclick={search}>Search</button>
 
     <details>
         <summary>Advanced Search</summary>
         <div class="advancedFlex">
-            <div class="filterSection" on:change={checkBoxCycle}>
+            <div class="filterSection" onchange={checkBoxCycle}>
                 <h4>General</h4>
                 <input type="checkbox" id="curatedFilter">
                 <label for="curatedFilter">Curated</label>
@@ -154,7 +156,7 @@
                 <input type="checkbox" id="fullSpreadFilter">
                 <label for="fullSpreadFilter">Full Spread</label>
             </div>
-            <div class="filterSection" on:change={checkBoxCycle}>
+            <div class="filterSection" onchange={checkBoxCycle}>
                 <h4>Mods</h4>
                 <input type="checkbox" id="chromaFilter">
                 <label for="chromaFilter">Chroma</label>
@@ -200,7 +202,7 @@
             </div>
         </div>
         <br>
-        <button class="filterButton" on:click={advancedSearch}>Search</button>
+        <button class="filterButton" onclick={advancedSearch}>Search</button>
     </details>
 {/if}
 

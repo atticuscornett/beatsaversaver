@@ -1,6 +1,6 @@
 <script>
-    export let song;
-    export let downloadedSongs;
+    /** @type {{song: any, downloadedSongs: any}} */
+    let { song, downloadedSongs = $bindable() } = $props();
 
     async function removeSong(){
         await electronAPI.removeCustomLevel(song.folder, song._songName + " (" + song._songAuthorName + ")");
@@ -19,7 +19,7 @@
     </div>
     <div class="sideDetails">
         <h5>{Math.round(song._beatsPerMinute)} bpm</h5>
-        <a href="#" on:click={removeSong}><h5>Delete</h5></a>
+        <a href="#" onclick={removeSong}><h5>Delete</h5></a>
     </div>
 </div>
 
