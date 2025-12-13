@@ -23,7 +23,7 @@
     }
 
     async function saveSettings(){
-        await electronAPI.setSettings(settings);
+        await electronAPI.setSettings($state.snapshot(settings));
     }
 
     onMount(async () => {
