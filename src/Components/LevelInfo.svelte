@@ -117,7 +117,7 @@
                 <button class="previewControl" onclick={() => paused = !paused}>
                     <img class="playPauseImage" alt="Play/Pause Button" src={"../src/Images/" + (paused ? "play" : "pause") + "Button.svg"}>
                 </button>
-                <progress value={previewProgress} max="{duration}"></progress>
+                <progress value={previewProgress} max={(isNaN(duration) ? 0 : duration)}></progress>
             </div>
         </div>
     </div>
