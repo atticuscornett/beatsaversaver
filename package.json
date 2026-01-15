@@ -20,7 +20,7 @@
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.2.2",
     "electron-builder": "^24.13.3",
-    "svelte": "^5.0.0"
+    "svelte": "^5.46.4"
   },
   "dependencies": {
     "adm-zip": "^0.5.14",
