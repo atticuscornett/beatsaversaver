@@ -13,7 +13,7 @@ async function setupStorage(){
     await storage.init();
     customLevelFolder = await storage.getItem('customLevelFolder');
     if (customLevelFolder === undefined){
-        customLevelFolder = "C:\\Program Files\\Oculus\\Software\\Software\\hyperbolic-magnetism-beat-saber\\Beat Saber_Data\\CustomLevels";
+        customLevelFolder = "C:\\Program Files\\Meta Horizon\\Software\\Software\\hyperbolic-magnetism-beat-saber\\Beat Saber_Data\\CustomLevels";
     }
 
     settings = await storage.getItem('settings');

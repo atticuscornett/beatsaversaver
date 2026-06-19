@@ -36,7 +36,7 @@
 
 <div class="settingsMargin" onchange={saveSettings}>
     <h2>Beat Saber Custom Level Folder</h2>
-    <h5>Typically C:\Program Files\Oculus\Software\Software\hyperbolic-magnetism-beat-saber\Beat Saber_Data\CustomLevels in Meta Quest Link</h5>
+    <h5>Typically C:\Program Files\Oculus\Software\Software\hyperbolic-magnetism-beat-saber\Beat Saber_Data\CustomLevels (old installs)<br>or C:\Program Files\Meta Horizon\Software\Software\hyperbolic-magnetism-beat-saber\Beat Saber_Data\CustomLevels (new installs) if installed via Meta Quest Link</h5>
     <input onchange={setCustomLevelFolder} id="customLevelFolder">
     <button onclick={selectCustomLevelFolder}>...</button>
 
